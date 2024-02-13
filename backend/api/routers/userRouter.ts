@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 
 import {
 	getSingleUser,
@@ -7,17 +7,21 @@ import {
 	updateSingleUser,
 	deleteSingleUser,
 	deleteAllUsers,
-} from '../controllers/userController.js';
+	loginUser,
+	getCurrentUser,
+} from "../controllers/userController.js";
 
 export const userRouter = express.Router();
 
 userRouter
-	.route('/')
+	.route("/")
 	.post(addSingleUser)
 	.get(getAllUsers)
 	.delete(deleteAllUsers);
+userRouter.route("/current").get(getCurrentUser);
 userRouter
-	.route('/:id')
+	.route("/:id")
 	.get(getSingleUser)
 	.patch(updateSingleUser)
 	.delete(deleteSingleUser);
+userRouter.route("/login").post(loginUser);
