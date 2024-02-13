@@ -1,4 +1,4 @@
-@url = http://localhost:4902
+@url = http://localhost:4711
 
 ### ADD SINGLE BOOK
 POST {{url}}/books
@@ -41,6 +41,8 @@ POST {{url}}/users
 content-type: application/json
 	
 {
+	"login": "jm",
+	"hash": "",
 	"firstName": "James",
 	"lastName": "Morgan",
 	"email": "james.morgan@htl.com",
