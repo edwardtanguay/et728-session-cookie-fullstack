@@ -85,3 +85,6 @@ content-type: application/json
 
 ### CURRENT USER
 GET {{url}}/users/current
+
+### LOGOUT USER
+GET {{url}}/users/logout

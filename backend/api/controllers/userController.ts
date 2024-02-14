@@ -3,6 +3,12 @@ import { handleError } from "../../tools";
 import { User } from "../schemas/userSchema";
 import express from "express";
 
+declare module "express-session" {
+	interface SessionData {
+		user: object;
+	}
+}
+
 export const addSingleUser = async (
 	req: express.Request,
 	res: express.Response
@@ -87,23 +93,35 @@ export const loginUser = async (req: any, res: express.Response) => {
 		const { login } = req.body;
 		const user = await User.findOne({ login });
 		if (user !== null) {
-      const seconds = 10;
+			const seconds = 10;
 			req.session.user = user;
-      req.session.cookie.expires = new Date(Date.now() + (seconds * 1000));
+			req.session.cookie.expires = new Date(Date.now() + seconds * 1000);
 			req.session.save();
 			res.json(user);
 		} else {
-			res.status(401).json('bad login');
+			res.status(401).json("bad login");
 		}
 	} catch (e) {
 		handleError(res, e);
 	}
 };
 
-export const getCurrentUser = async (req: express.Request, res: express.Response) => {
+export const logoutUser = async (req: any, res: express.Response) => {
+	try {
+		req.session.user = null;
+		res.send("user logged out");
+	} catch (e) {
+		handleError(res, e);
+	}
+};
+
+export const getCurrentUser = async (
+	req: express.Request,
+	res: express.Response
+) => {
 	try {
 		if (req.session.user) {
-      console.log(req.session.user);
+			console.log(req.session.user);
 			res.send(req.session.user);
 		} else {
 			res.status(401).send("no user logged in");

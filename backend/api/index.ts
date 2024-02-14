@@ -8,12 +8,6 @@ import { userRouter } from "./routers/userRouter";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 
-declare module "express-session" {
-	interface SessionData {
-		user: object;
-	}
-}
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -26,7 +20,7 @@ app.use(
 	session({
 		resave: true,
 		saveUninitialized: true,
-		secret: "tempsecret",
+		secret: config.sessionSecret()
 	})
 );
 app.use(cookieParser());

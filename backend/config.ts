@@ -27,3 +27,7 @@ export const dbUrl = (): string => {
 export const backendUrl = (): string => {
 	return `http://localhost:${config.backendPort()}`;
 }
+
+export const sessionSecret = (): string => {
+	return String(process.env.SESSION_SECRET);
+}
